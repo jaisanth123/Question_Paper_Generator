@@ -25,7 +25,7 @@ const PdfUploader = () => {
     formData.append("endPage", endPage); // Append end page number
 
     try {
-      const response = await fetch("http://localhost:3001/extract-pdf", {
+      const response = await fetch("http://localhost:3000/extract-pdf", {
         method: "POST",
         body: formData,
       });
