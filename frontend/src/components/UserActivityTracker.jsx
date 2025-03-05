@@ -8,7 +8,7 @@ const UserActivityTracker = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          console.log("User is back in the viewport");
+          console.log("User  is a  back in the viewport");
         } else {
           console.log("User is out of the viewport");
         }
