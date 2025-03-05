@@ -1,60 +1,75 @@
-// frontend/src/components/SignIn.jsx
 import React, { useState } from "react";
+import { FaUser, FaLock } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Hardcoded credentials
     if (username === "jai" && password === "1234") {
-      // Create a simple JWT token (for demonstration purposes)
       const token = btoa(
         JSON.stringify({ username, exp: Date.now() + 3600000 })
-      ); // Expires in 1 hour
-      sessionStorage.setItem("jwtToken", token); // Store token in session storage
-      onLogin(); // Call the onLogin function passed as a prop
+      );
+      sessionStorage.setItem("jwtToken", token);
+      onLogin();
+      navigate("/"); // Redirect to home page after login
     } else {
       setError("Invalid username or password");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900">
+    <div className="flex items-center justify-center min-h-screen bg-white">
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-800 p-6 rounded shadow-md w-80"
+        className="bg-gray-100 p-8 rounded-lg shadow-lg w-96"
       >
-        <h2 className="text-xl font-bold mb-4 text-white">Sign In</h2>
+        <h2 className="text-2xl font-bold mb-4 text-white text-center bg-black p-3 rounded-t">
+          Sign In
+        </h2>
         {error && <p className="text-red-500">{error}</p>}
         <div className="mb-4">
-          <label className="block text-gray-300">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="border border-gray-600 bg-gray-700 p-2 w-full rounded text-white"
-            required
-          />
+          <label className="block text-black mb-2">Username</label>
+          <div className="flex items-center border border-black bg-gray-200 p-2 rounded">
+            <FaUser className="mr-2 text-black" />
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="bg-transparent border-none w-full text-black"
+              required
+            />
+          </div>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-300">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-600 bg-gray-700 p-2 w-full rounded text-white"
-            required
-          />
+          <label className="block text-black mb-2">Password</label>
+          <div className="flex items-center border border-black bg-gray-200 p-2 rounded">
+            <FaLock className="mr-2 text-black" />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="bg-transparent border-none w-full text-black"
+              required
+            />
+          </div>
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600 transition"
+          className="bg-black text-white p-3 rounded w-full hover:bg-gray-800 transition"
         >
           Login
         </button>
+        <p className="mt-4 text-center">
+          New to the site?{" "}
+          <Link to="/signup" className="text-blue-500 hover:underline">
+            Sign up
+          </Link>
+        </p>
       </form>
     </div>
   );

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Use Routes instead of Switch
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import QuestionPaperGenerator from "./components/QuestionPaperGenerator";
-import UserActivityTracker from "./components/utils/UserActivityTracker";
 import SignIn from "./components/auth/SignIn";
+import SignUp from "./components/auth/SignUp";
 import PdfUploader from "./components/pdf/PdfUploader";
 
 function App() {
@@ -28,17 +28,26 @@ function App() {
   return (
     <Router>
       <div className="bg-white text-black min-h-screen">
-        <NavBar />
-        {isAuthenticated ? (
-          <Routes>
-            <Route path="/" element={<QuestionPaperGenerator />} />
-            <Route path="/upload" element={<PdfUploader />} />
-            <Route path="/about" element={<div>About Page</div>} />
-            <Route path="/contact" element={<div>Contact Page</div>} />
-          </Routes>
-        ) : (
-          <SignIn onLogin={handleLogin} />
-        )}
+        {isAuthenticated && <NavBar />}
+        <Routes>
+          {isAuthenticated ? (
+            <>
+              <Route path="/" element={<QuestionPaperGenerator />} />
+              <Route path="/upload" element={<PdfUploader />} />
+              <Route path="/about" element={<div>About Page</div>} />
+              <Route path="/contact" element={<div>Contact Page</div>} />
+            </>
+          ) : (
+            <>
+              <Route
+                path="/signin"
+                element={<SignIn onLogin={handleLogin} />}
+              />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/" element={<SignIn onLogin={handleLogin} />} />
+            </>
+          )}
+        </Routes>
       </div>
     </Router>
   );
