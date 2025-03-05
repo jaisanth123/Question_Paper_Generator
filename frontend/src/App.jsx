@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import QuestionPaperGenerator from "./components/QuestionPaperGenerator";
 import UserActivityTracker from "./components/utils/UserActivityTracker";
 import SignIn from "./components/auth/SignIn";
+import PdfUploader from "./components/pdf/PdfUploader";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,6 +33,7 @@ function App() {
           <NavBar />
           <UserActivityTracker />
           <QuestionPaperGenerator />
+          <PdfUploader />
         </>
       ) : (
         <SignIn onLogin={handleLogin} />
