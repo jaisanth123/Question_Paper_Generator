@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaUpload } from "react-icons/fa"; // Importing an upload icon
+import { FaUpload, FaFilePdf, FaClipboardList } from "react-icons/fa"; // Import additional icons
 
 const PdfUploader = () => {
   const [file, setFile] = useState(null);
@@ -15,7 +15,7 @@ const PdfUploader = () => {
     formData.append("file", file);
 
     try {
-      const response = await fetch("http://localhost:3000/extract-pdf", {
+      const response = await fetch("http://localhost:3001/extract-pdf", {
         method: "POST",
         body: formData,
       });
@@ -35,32 +35,39 @@ const PdfUploader = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-white">
       <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
-        <h2 className="text-xl font-bold mb-4">Upload PDF</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <input
-              type="file"
-              accept="application/pdf"
-              onChange={handleFileChange}
-              required
-              className="border border-gray-600 bg-gray-200 p-2 w-full rounded"
-            />
+        <h2 className="text-xl font-bold mb-4 text-black">Upload PDF</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col items-center">
+          <div className="mb-4 w-full flex flex-col">
+            <label className="block text-black mb-2">Choose a PDF file:</label>
+            <div className="flex items-center border border-black bg-gray-200 p-2 rounded w-full">
+              <FaFilePdf className="mr-2 text-black" />
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={handleFileChange}
+                required
+                className="bg-transparent border-none w-full text-black"
+              />
+            </div>
           </div>
           <button
             type="submit"
             className="bg-black text-white p-2 rounded w-full flex items-center justify-center hover:bg-gray-800 transition"
           >
-            <FaUpload className="mr-2" /> {/* Upload icon */}
+            <FaUpload className="mr-2" />
             Extract Content
           </button>
         </form>
         {extractedData && (
-          <div className="mt-4">
-            <h3 className="text-lg font-bold">Extracted Text:</h3>
+          <div className="mt-4 w-full">
+            <h3 className="text-lg font-bold text-black flex items-center">
+              <FaClipboardList className="mr-2 text-black" />
+              Extracted Text:
+            </h3>
             {extractedData.text.map((text, index) => (
-              <p key={index} className="text-gray-700">
+              <p key={index} className="text-gray-700 w-full">
                 {text}
               </p>
             ))}
