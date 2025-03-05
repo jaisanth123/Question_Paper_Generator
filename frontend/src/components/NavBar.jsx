@@ -11,28 +11,28 @@ const NavBar = () => {
         <div className="text-white font-bold text-xl">
           Question Paper Generator
         </div>
-        <div className="flex space-x-4">
+        <div className="flex space-x-8">
           <Link
             to="/"
-            className="text-white text-xl hover:scale-110 transition"
+            className="text-white hover:scale-110 hover:underline  duration-500 transition"
           >
             Home
           </Link>
           <Link
-            to="/about"
-            className="text-white text-xl hover:scale-110 transition"
+            to="/proctor"
+            className="text-white  hover:scale-110 hover:underline duration-500 transition"
           >
-            About
+            Take Test
           </Link>
           <Link
             to="/contact"
-            className="text-white text-xl hover:scale-110 transition"
+            className="text-white  hover:scale-110 hover:underline duration-500 transition"
           >
             Contact
           </Link>
           <Link
             to="/upload"
-            className="bg-black text-white p-1 rounded hover:scale-110  transition"
+            className="bg-black text-white hover:underline duration-500 hover:scale-110  transition"
           >
             Upload PDF
           </Link>
