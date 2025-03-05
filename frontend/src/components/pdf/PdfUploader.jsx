@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaUpload } from "react-icons/fa"; // Importing an upload icon
 
 const PdfUploader = () => {
   const [file, setFile] = useState(null);
@@ -34,32 +35,38 @@ const PdfUploader = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded shadow-md w-full max-w-md">
-      <h2 className="text-xl font-bold mb-4">Upload PDF</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded w-full"
-        >
-          Extract Content
-        </button>
-      </form>
-      {extractedData && (
-        <div className="mt-4">
-          <h3 className="text-lg font-bold">Extracted Text:</h3>
-          {extractedData.text.map((text, index) => (
-            <p key={index}>{text}</p>
-          ))}
-        </div>
-      )}
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
+        <h2 className="text-xl font-bold mb-4">Upload PDF</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={handleFileChange}
+              required
+              className="border border-gray-600 bg-gray-200 p-2 w-full rounded"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-black text-white p-2 rounded w-full flex items-center justify-center hover:bg-gray-800 transition"
+          >
+            <FaUpload className="mr-2" /> {/* Upload icon */}
+            Extract Content
+          </button>
+        </form>
+        {extractedData && (
+          <div className="mt-4">
+            <h3 className="text-lg font-bold">Extracted Text:</h3>
+            {extractedData.text.map((text, index) => (
+              <p key={index} className="text-gray-700">
+                {text}
+              </p>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

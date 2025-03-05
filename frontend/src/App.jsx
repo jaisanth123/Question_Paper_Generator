@@ -1,5 +1,5 @@
-// frontend/src/App.jsx
 import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Use Routes instead of Switch
 import NavBar from "./components/NavBar";
 import QuestionPaperGenerator from "./components/QuestionPaperGenerator";
 import UserActivityTracker from "./components/utils/UserActivityTracker";
@@ -17,28 +17,30 @@ function App() {
     const token = sessionStorage.getItem("jwtToken");
     if (token) {
       const decodedToken = JSON.parse(atob(token));
-      // Check if the token is expired
       if (decodedToken.exp < Date.now()) {
-        sessionStorage.removeItem("jwtToken"); // Remove expired token
+        sessionStorage.removeItem("jwtToken");
       } else {
-        setIsAuthenticated(true); // Token is valid
+        setIsAuthenticated(true);
       }
     }
   }, []);
 
   return (
-    <div className="w-full min-h-screen">
-      {isAuthenticated ? (
-        <>
-          <NavBar />
-          <UserActivityTracker />
-          <QuestionPaperGenerator />
-          <PdfUploader />
-        </>
-      ) : (
-        <SignIn onLogin={handleLogin} />
-      )}
-    </div>
+    <Router>
+      <div className="bg-white text-black min-h-screen">
+        <NavBar />
+        {isAuthenticated ? (
+          <Routes>
+            <Route path="/" element={<QuestionPaperGenerator />} />
+            <Route path="/upload" element={<PdfUploader />} />
+            <Route path="/about" element={<div>About Page</div>} />
+            <Route path="/contact" element={<div>Contact Page</div>} />
+          </Routes>
+        ) : (
+          <SignIn onLogin={handleLogin} />
+        )}
+      </div>
+    </Router>
   );
 }
 
