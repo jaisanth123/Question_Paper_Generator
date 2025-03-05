@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link for navigation
+import { FaClipboardList, FaUserGraduate, FaHome, FaEye } from "react-icons/fa"; // Import icons
 
 const NavBar = () => {
   return (
@@ -8,7 +9,8 @@ const NavBar = () => {
       justify between places it in two ends 
       item center will make the element center in with and heignt of the navbar */}
       <div className="container h-10 mx-auto flex justify-between items-center">
-        <div className="text-white font-bold text-xl">
+        <div className="flex items-center text-white font-bold text-xl">
+          <FaClipboardList className="mr-2" /> {/* Icon for Question Paper */}
           Question Paper Generator
         </div>
         <div className="flex space-x-8">
@@ -16,25 +18,25 @@ const NavBar = () => {
             to="/"
             className="text-white hover:scale-110 hover:underline  duration-500 transition"
           >
-            Home
+            <FaHome className="mr-1" /> Home
           </Link>
           <Link
             to="/proctor"
             className="text-white  hover:scale-110 hover:underline duration-500 transition"
           >
-            Take Test
+            <FaUserGraduate className="mr-1" /> Take Test
           </Link>
           <Link
             to="/contact"
             className="text-white  hover:scale-110 hover:underline duration-500 transition"
           >
-            Contact
+            <FaEye className="mr-1" /> Contact
           </Link>
           <Link
             to="/upload"
             className="bg-black text-white hover:underline duration-500 hover:scale-110  transition"
           >
-            Upload PDF
+            <FaClipboardList className="mr-" /> Upload PDF
           </Link>
         </div>
       </div>
