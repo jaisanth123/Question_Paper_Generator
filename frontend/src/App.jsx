@@ -6,6 +6,7 @@ import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import PdfUploader from "./components/pdf/PdfUploader";
 import Proctor from "./components/proctoring/Proctor";
+import Test from "./components/proctoring/test";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -38,6 +39,8 @@ function App() {
               <Route path="/about" element={<div>About Page</div>} />
               <Route path="/contact" element={<div>Contact Page</div>} />
               <Route path="/proctor" element={<Proctor />} />
+              <Route path="/test" element={<Test />} />
+              <Route path="*" element={<div>404 Not Found</div>} />
             </>
           ) : (
             <>
