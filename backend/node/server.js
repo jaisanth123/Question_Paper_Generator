@@ -14,41 +14,41 @@ app.use(cors());
 // Set up multer for file uploads
 const upload = multer({ dest: "uploads/" });
 
-app.post("/extract-pdf", upload.single("file"), async (req, res) => {
-  const filePath = req.file.path;
+// app.post("/extract-pdf", upload.single("file"), async (req, res) => {
+//   const filePath = req.file.path;
 
-  console.log("Uploaded file:", req.file);
+//   console.log("Uploaded file:", req.file);
 
-  // Validate file type
-  if (req.file.mimetype !== "application/pdf") {
-    return res.status(400).send("Uploaded file is not a PDF.");
-  }
+//   // Validate file type
+//   if (req.file.mimetype !== "application/pdf") {
+//     return res.status(400).send("Uploaded file is not a PDF.");
+//   }
 
-  try {
-    const loadingTask = pdfjsLib.getDocument(filePath);
-    const pdfDoc = await loadingTask.promise;
+//   try {
+//     const loadingTask = pdfjsLib.getDocument(filePath);
+//     const pdfDoc = await loadingTask.promise;
 
-    // Log the number of pages in the PDF
-    console.log("Number of pages in PDF:", pdfDoc.numPages);
+//     // Log the number of pages in the PDF
+//     console.log("Number of pages in PDF:", pdfDoc.numPages);
 
-    const extractedData = {
-      text: [],
-    };
+//     const extractedData = {
+//       text: [],
+//     };
 
-    for (let i = 1; i <= pdfDoc.numPages; i++) {
-      const page = await pdfDoc.getPage(i);
-      const textContent = await page.getTextContent();
-      const pageText = textContent.items.map((item) => item.str).join(" ");
-      extractedData.text.push(pageText);
-    }
+//     for (let i = 1; i <= pdfDoc.numPages; i++) {
+//       const page = await pdfDoc.getPage(i);
+//       const textContent = await page.getTextContent();
+//       const pageText = textContent.items.map((item) => item.str).join(" ");
+//       extractedData.text.push(pageText);
+//     }
 
-    fs.unlinkSync(filePath); // Remove the uploaded file
-    res.json(extractedData); // Send extracted data as JSON
-  } catch (error) {
-    console.error("Error loading PDF:", error);
-    res.status(500).send("Error extracting PDF");
-  }
-});
+//     fs.unlinkSync(filePath); // Remove the uploaded file
+//     res.json(extractedData); // Send extracted data as JSON
+//   } catch (error) {
+//     console.error("Error loading PDF:", error);
+//     res.status(500).send("Error extracting PDF");
+//   }
+// });
 
 app.post("/upload", upload.single("pdf"), async (req, res) => {
   try {
@@ -60,8 +60,8 @@ app.post("/upload", upload.single("pdf"), async (req, res) => {
       return res.status(400).json({ error: "Invalid page numbers" });
     }
 
-    const start = parseInt(startPage);
-    const end = parseInt(endPage);
+    const start = parseInt(startPage) - 1;
+    const end = parseInt(endPage) - 1;
 
     // Load the input PDF
     const pdfBytes = fs.readFileSync(inputPath);

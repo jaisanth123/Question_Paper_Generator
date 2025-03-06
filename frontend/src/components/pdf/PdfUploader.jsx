@@ -10,7 +10,7 @@ import {
 
 const PdfUploader = () => {
   const [file, setFile] = useState(null);
-  const [startPage, setStartPage] = useState(0);
+  const [startPage, setStartPage] = useState(1);
   const [endPage, setEndPage] = useState("");
   const [totalPages, setTotalPages] = useState(null);
   const [percentages, setPercentages] = useState(Array(5).fill("")); // State for percentage inputs
@@ -30,8 +30,8 @@ const PdfUploader = () => {
         );
         const { totalPages } = response.data;
         setTotalPages(totalPages);
-        setStartPage(0); // Default start page
-        setEndPage(totalPages - 1); // Default end page
+        setStartPage(1); // Default start page set to 1
+        setEndPage(totalPages); // Default end page set to total pages
       } catch (error) {
         console.error("Error fetching page count:", error);
       }
@@ -121,8 +121,8 @@ const PdfUploader = () => {
             placeholder="Start Page"
             value={startPage}
             onChange={(e) => setStartPage(parseInt(e.target.value))}
-            min="0"
-            max={totalPages ? totalPages - 1 : ""}
+            min="1"
+            max={totalPages ? totalPages : ""}
             className="mb-4 border border-black p-2 rounded w-full"
           />
           <div className="mb-4 w-full flex items-center">
@@ -140,8 +140,8 @@ const PdfUploader = () => {
             placeholder="End Page"
             value={endPage}
             onChange={(e) => setEndPage(parseInt(e.target.value))}
-            min="0"
-            max={totalPages ? totalPages - 1 : ""}
+            min="1"
+            max={totalPages ? totalPages : ""}
             className="mb-4 border border-black p-2 rounded w-full"
           />
           <div className="mb-4 w-full flex flex-col">
