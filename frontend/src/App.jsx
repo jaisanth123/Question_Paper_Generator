@@ -8,6 +8,7 @@ import PdfUploader from "./components/pdf/PdfUploader";
 import Proctor from "./components/proctoring/Proctor";
 import Test from "./components/proctoring/test";
 import Profile from "./components/utils/Profile";
+import Quiz from "./components/Quiz";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -42,6 +43,7 @@ function App() {
               <Route path="/proctor" element={<Proctor />} />
               <Route path="/test" element={<Test />} />
               <Route path="*" element={<div>404 Not Found</div>} />
+              <Route path="/quiz" element={<Quiz/>} />
             </>
           ) : (
             <>

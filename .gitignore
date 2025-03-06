@@ -1,3 +1,4 @@
 *.csv
 *.txt
 poppler-24.08.0
+node_modules
