@@ -2,152 +2,153 @@ Generating questions...
 
 Evaluating QA pairs...
 
-1) Q: How long after the tweets were first posted?
-   A: 1. the next 30 minutes 
-      2. a few minutes 
-      3. just minutes (correct)
-      4. 20:30 EDT 
+1) Q: What is the graphical user interface?
+   1. GUI
+   2. Graphical User Interface (correct)
+   3. Sun Certified Business Component Developer
+   4. BorderLayout
 
-2) Q: How long did it take to remove the tweet?
-   A: 1. a few minutes (correct)
-      2. just minutes 
-      3. 20:30 EDT 
-      4. the next 30 minutes 
+2) Q: what is a java program that runs on a web server?
+   1. Java 1
+   2. RMI
+   3. Java (correct)
+   4. Jini
 
-3) Q: What was the password reset request?
-   A: 1. BBC 
-      2. Password (correct)
-      3. Reuters 
-      4. The US Senate Commerce 
+3) Q: What is the best way to get started?
+   1. 14
+   2. Amazon
+   3. the Java API
+   4. First (correct)
 
-4) Q: What is the worst hack of a major social media platform yet?
-   A: 1. King's College London 
-      2. CrowdStrike (correct)
-      3. GMT
-      4. FBI 
+4) Q: What is the UI layout manager?
+   1. BoxLayout
+   2. Servlets
+   3. BeatBox
+   4. GUI (correct)
 
-5) Q: How long will it take to double any Bitcoin payment sent to the address of his digital wallet?
-   A: 1. 20:30 EDT 
-      2. just minutes 
-      3. a few minutes 
-      4. the next 30 minutes (correct)
+5) Q: What is a component architecture for building enterprise applications?
+   1. EJB (correct)
+   2. BoxLayout
+   3. RMI
+   4. The Java Collections Framework
 
-6) Q: How much money did the link receive in the short time it was online?
-   A: 1. just minutes 
-      2. 1,000 
-      3. more than $100,000 (correct)
-      4. 2,000 
+6) Q: What is the title of the book?
+   1. Java Beans
+   2. First (correct)
+   3. RMI
+   4. hundreds
 
-7) Q: What is the role of social media companies in the 2020 election?
-   A: 1. Twitter (correct)
-      2. Alexi Drew 
-      3. Cameron Winklevoss 
-      4. Musk 
+7) Q: What is the name of the book?
+   1. Amazon (correct)
+   2. The Java Collections Framework
+   3. EJB
+   4. GUI
 
-8) Q: What was the message?
-   A: 1. Microsoft 
-      2. BBC 
-      3. the White House 
-      4. Instagram (correct)
+8) Q: What are the main ways to organize and access data?
+   1. RMI
+   2. ArrayLists (correct)
+   3. Amazon
+   4. EJB
 
-9) Q: When did users with verified accounts start to be able to send tweets again?
-   A: 1. Wednesday 
-      2. 2017 
-      3. November 
-      4. Thursday (correct)
+9) Q: Afsah Shafquat is the youngest SCBCD (Sun Certified Business?
+   1. 2004
+   2. 2003, 2005
+   3. 14 (correct)
+   4. 2003
 
-10) Q: When did Twitter start to send tweets again?
-    A: 1. just minutes 
-       2. 20:30 EDT (correct)
-       3. a few minutes 
-       4. the next 30 minutes 
+10) Q: is referenced.?
+    1. hundreds
+    2. 2004
+    3. 02 (correct)
+    4. 1
 
-11) Q: What is the FBI's investigation into the hacking of Twitter accounts of high-profile US figures?
-    A: 1. Bitcoin (correct)
-       2. Cameron Winklevoss 
-       3. Twitter 
-       4. Kim Kardashian West 
+11) Q: What is the name of the book?
+    1. BorderLayout
+    2. Servlets
+    3. ArrayLists
+    4. Sun Certified Business Component Developer (correct)
 
-12) Q: How many contributions did the link receive in the short time it was online?
-    A: 1. hundreds (correct)
-       2. one 
-       3. millions 
-       4. One 
+12) Q: is mentioned as an early release?
+    1. 1
+    2. the Java API
+    3. 02 (correct)
+    4. hundreds
 
-13) Q: What is the worst hack of a major social media platform yet?
-    A: 1. FBI 
-       2. Reuters (correct)
-       3. the White House 
-       4. the Senate Commerce committee 
+13) Q: What is the concept of RMI?
+    1. Diamond of Death
+    2. Servlets
+    3. The Java Collections Framework
+    4. EJB (correct)
 
-14) Q: How many followers do the accounts targeted have?
-    A: 1. hundreds 
-       2. One 
-       3. one 
-       4. millions (correct)
+14) Q: What is the book about?
+    1. FlowLayout
+    2. the "Sink a Dot Com (correct)
+    3. Java Beans
+    4. Amazon
 
-15) Q: "The account was not compromised," the White House said.?
-    A: 1. Bitcoin 
-       2. Bill Gates 
-       3. Jack Dorsey's 
-       4. Trump (correct)
+15) Q: A technology for distributed computing.?
+    1. Java Beans
+    2. Java 1
+    3. Java
+    4. Jini (correct)
 
-16) Q: what is the bbc's security source?
-    A: 1. the Senate Commerce committee 
-       2. Password 
-       3. GMT 
-       4. BBC (correct)
+16) Q: What is the book about?
+    1. Servlets
+    2. The Java Collections Framework
+    3. BeatBox (correct)
+    4. ArrayLists
 
-17) Q: What is the message from the breach?
-    A: 1. Republican 
-       2. Democratic (correct)
-       3. Tesla 
-       4. Bitcoin 
+17) Q: What is the name of the book?
+    1. RMI
+    2. Java 1
+    3. Java Beans
+    4. Java (correct)
 
-18) Q: What is the message about Cameron Winklevoss?
-    A: 1. Trump 
-       2. Kim Kardashian West 
-       3. Tyler (correct)
-       4. Jack Dorsey's 
+18) Q: In the book, the author mentions hundreds of pre-built classes in the Java API.?
+    1. hundreds (correct)
+    2. BorderLayout
+    3. 02
+    4. 1
 
-19) Q: "I'm feeling generous because of Covid-19," the tweet added.?
-    A: 1. Republican 
-       2. Democratic 
-       3. Tesla 
-       4. Bitcoin (correct)
+19) Q: What is the title of the book?
+    1. 2003, 2005 (correct)
+    2. 2003
+    3. 2004
+    4. 14
 
-20) Q: What time did the tweets be deleted?
-    A: 1. first (correct)
-       2. Musk 
-       3. third 
-       4. one 
+20) Q: answer> 1 context> * Java version 1.?
+    1. 1 (correct)
+    2. 02
+    3. Jini
+    4. hundreds
 
-21) Q: "Everyone is asking me to give back," said Mr Gates in a tweet.?
-    A: 1. Apple 
-       2. The US Senate Commerce 
-       3. Microsoft (correct)
-       4. GMT 
+21) Q: answer> BoxLayout context> (FlowLayout,?
+    1. BoxLayout (correct)
+    2. EJB
+    3. Graphical User Interface
+    4. GUI
 
-22) Q: What is the role of social media companies in the 2020 election?
-    A: 1. GMT 
-       2. Apple 
-       3. National Cyber Security Centre 
-       4. BBC (correct)
+22) Q: What is the Java Collections Framework?
+    1. Amazon
+    2. FlowLayout
+    3. ArrayLists
+    4. The Java Collections Framework (correct)
 
-23) Q: Where did Mr Musk offer to double any Bitcoin payment sent to the address of his digital wallet?
-    A: 1. Bitcoin 
-       2. Republican 
-       3. Tesla (correct)
-       4. Democratic 
+23) Q: What is the concept of RMI?
+    1. Servlets (correct)
+    2. RMI
+    3. ArrayLists
+    4. EJB
 
-24) Q: answer> The US Senate Commerce committee has demanded it brief it about Wednesday's?
-    A: 1. November 
-       2. 2020 
-       3. Wednesday 
-       4. 23 July (correct)
+24) Q: answer> the Java API context> * The book mentions hundreds of?
+    1. the Java API (correct)
+    2. Java 1
+    3. FlowLayout
+    4. Jini
 
-25) Q: What happened to the Twitter accounts of high-profile US figures?
-    A: 1. FBI (correct)
-       2. National Cyber Security Centre 
-       3. the White House 
-       4. The US Senate Commerce
+25) Q: answer> BorderLayout context> (FlowLayout,?
+    1. Sun Certified Business Component Developer
+    2. RMI
+    3. BeatBox
+    4. BorderLayout (correct)
+

@@ -18,6 +18,7 @@ import uvicorn
 import subprocess 
 app = FastAPI(title="PDF OCR API", description="API for OCR processing of PDF documents")
 from fastapi.middleware.cors import CORSMiddleware
+import shutil
 
 # Allow requests from frontend (localhost:5173)
 app.add_middleware(
@@ -112,49 +113,6 @@ def save_report_as_pdf(report_text, pdf_path):
         c.drawString(40, y, line)
         y -= 12
     c.save()
-
-# def extract_contents_from_pdf(pdf_path, output_dir, report_pdf_path):
-#     """Process the PDF and extract text, tables, and images"""
-#     print(f"Starting OCR processing on {pdf_path}")
-#     doc = fitz.open(pdf_path)
-#     os.makedirs(output_dir, exist_ok=True)
-#     total_pages = doc.page_count
-#     full_report = f"OCR Processing Report\n{'='*50}\n\n"
-    
-#     def process_page(page_num):
-#         print(f"Processing page {page_num + 1} of {total_pages}")
-#         page = doc.load_page(page_num)
-#         table_dataframes, table_areas = extract_tables(pdf_path, page_num, output_dir)
-#         extracted_text = page.get_text("blocks")
-#         text = ""
-
-#         for block in extracted_text:
-#             bbox = block[:4]
-#             block_text = block[4]
-#             if not any(intersect_areas(bbox, table_bbox) for table_bbox in table_areas):
-#                 text += block_text
-
-#         if not text.strip():
-#             print(f"Text not detected on page {page_num + 1}, processing as image...")
-#             text = extract_image_text_from_pdf_page(pdf_path, page_num)
-
-#         page_content = f"Page {page_num + 1}:\n{text}"
-#         if table_dataframes:
-#             page_content += "\n" + "\n".join(table_dataframes)
-#         else:
-#             page_content += "\nNo tables detected on this page."
-        
-#         return page_content
-
-#     with ThreadPoolExecutor() as thread_executor:
-#         page_futures = [thread_executor.submit(process_page, page_num) for page_num in range(total_pages)]
-#         for future in page_futures:
-#             full_report += future.result() + "\n" + "="*40 + "\n"
-
-#     save_report_as_pdf(full_report, report_pdf_path)
-#     print(f"OCR report saved to {report_pdf_path}")
-#     doc.close()
-#     return report_pdf_path  # Return the path to the OCR processed PDF
 
 def extract_contents_from_pdf(pdf_path, output_dir, report_pdf_path):
     """Process the PDF and extract text, tables, and images"""
@@ -284,11 +242,92 @@ async def process_pdf(pdf: UploadFile = File(...)):
             with open(questions_output_path, "w", encoding="utf-8") as f:
                 f.write(question_generator_output)
             print(f"Questions saved to {questions_output_path}")
+            FRONTEND_PUBLIC_FOLDER = "e:\\Hacknovate\\Question_Paper_Generator\\frontend\\public"
+            frontend_questions_output_path = os.path.join(FRONTEND_PUBLIC_FOLDER, "ques.txt")
+            shutil.copy(questions_output_path, frontend_questions_output_path)
 
+            print(f"Questions also saved to {frontend_questions_output_path}")
         except subprocess.CalledProcessError as e:
             print(f"Error running question generator script: {e.stderr}")
             raise HTTPException(status_code=500, detail=f"Question generation failed: {e.stderr}")
+        # After question generation and before returning FileResponse
+        # try:
+        #     # with open(questions_output_path, "w", encoding="utf-8") as f:
+        #     #     f.write(question_generator_output)
+        #     # Generate PDFs from questions
+        #     print("Generating question paper PDFs...")
+        #     print("------",questions_output_path)
+        #     pdf_generator_process = subprocess.run(
+        #         ["python", "e:\\Hacknovate\\Question_Paper_Generator\\question_generator\\qa_pdf_generator_enhanced.py",
+        #          "--input_file", questions_output_path,
+        #          "--output_file", os.path.join(OUTPUT_FOLDER, 
+        #             f"{os.path.splitext(os.path.basename(pdf.filename))[0]}_exam.pdf")],
+        #         check=True,
+        #         capture_output=True,
+        #         text=True,
+        #         encoding='utf-8'
+        #     )
+        #     print("Question PDFs generated successfully")
+        #     # Optional: Copy PDFs to frontend public folder if needed
+        #     FRONTEND_PUBLIC_FOLDER = "e:\\Hacknovate\\Question_Paper_Generator\\frontend\\public"
+        #     exam_base = os.path.splitext(os.path.basename(pdf.filename))[0]
+        #     shutil.copy(
+        #         os.path.join(OUTPUT_FOLDER, f"{exam_base}_exam_with_answers.pdf"),
+        #         os.path.join(FRONTEND_PUBLIC_FOLDER, "exam_with_answers.pdf")
+        #     )
+        #     shutil.copy(
+        #         os.path.join(OUTPUT_FOLDER, f"{exam_base}_exam_without_answers.pdf"),
+        #         os.path.join(FRONTEND_PUBLIC_FOLDER, "exam_without_answers.pdf")
+        #     )
+        # except subprocess.CalledProcessError as e:
+        #     print(f"Error generating PDFs: {e.stderr}")
+        #     # Still return OCR report if PDF generation fails
+        #     return FileResponse(
+        #         report_pdf_path,
+        #         media_type="application/pdf",
+        #         filename=f"ocr_processed_{os.path.basename(pdf.filename)}"
+        #     )
+        # Replace all the PDF generation attempts with this single block
+        try:
+            print("Generating question paper PDFs...")
+            input_file = "E:\\Hacknovate\\Question_Paper_Generator\\frontend\\public\\ques.txt"
+            output_base = os.path.join(OUTPUT_FOLDER, 
+                f"{os.path.splitext(os.path.basename(pdf.filename))[0]}_exam")
+            
+            # Single PDF generation call
+            pdf_generator_process = subprocess.run([
+                "python",
+                "e:\\Hacknovate\\Question_Paper_Generator\\question_generator\\qa_pdf_generator_enhanced.py",
+                "--input_file", input_file,
+                "--output_file", f"{output_base}.pdf"
+            ], check=True, capture_output=True, text=True, encoding='utf-8')
+            
+            if pdf_generator_process.returncode == 0:
+                print("Question PDFs generated successfully")
+                
+                # Verify and copy PDFs to frontend
+                with_answers = f"{output_base}_with_answers.pdf"
+                without_answers = f"{output_base}_without_answers.pdf"
+                
+                if os.path.exists(with_answers) and os.path.exists(without_answers):
+                    # Copy to frontend public folder
+                    FRONTEND_PUBLIC_FOLDER = "e:\\Hacknovate\\Question_Paper_Generator\\frontend\\public"
+                    shutil.copy(with_answers, os.path.join(FRONTEND_PUBLIC_FOLDER, "exam_with_answers.pdf"))
+                    shutil.copy(without_answers, os.path.join(FRONTEND_PUBLIC_FOLDER, "exam_without_answers.pdf"))
+                    print("PDFs copied to frontend public folder")
+                else:
+                    print("PDFs were not created successfully")
+            else:
+                print(f"Error in PDF generation: {pdf_generator_process.stderr}")
 
+        except Exception as e:
+            print(f"Error generating PDFs: {str(e)}")
+            # Fall back to returning just the OCR report
+            return FileResponse(
+                report_pdf_path,
+                media_type="application/pdf",
+                filename=f"ocr_processed_{os.path.basename(pdf.filename)}"
+            )
         # Return the processed PDF report
         return FileResponse(
             report_pdf_path, 
