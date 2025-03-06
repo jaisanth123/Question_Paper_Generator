@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import QuestionPaperGenerator from "./components/QuestionPaperGenerator";
@@ -14,6 +15,7 @@ import Proctor from "./components/proctoring/Proctor";
 import Test from "./components/proctoring/test";
 import Profile from "./components/utils/Profile";
 import Quiz from "./components/Quiz";
+import History from "./components/utils/History";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -23,40 +25,106 @@ function App() {
     setIsAuthenticated(true);
   };
 
-  useEffect(() => {
+  const checkAuth = () => {
     const token = sessionStorage.getItem("jwtToken");
     if (token) {
-      const decodedToken = JSON.parse(atob(token));
-      if (decodedToken.exp < Date.now()) {
-        sessionStorage.removeItem("jwtToken");
-      } else {
-        setIsAuthenticated(true);
+      try {
+        const decodedToken = JSON.parse(atob(token.split(".")[0] || token));
+        if (decodedToken.exp > Date.now()) {
+          setIsAuthenticated(true);
+          return;
+        }
+      } catch (e) {
+        console.error("Error parsing token:", e);
       }
+      // Token expired or invalid
+      sessionStorage.removeItem("jwtToken");
+      setIsAuthenticated(false);
+    } else {
+      setIsAuthenticated(false);
     }
-  }, []);
+  };
+
+  useEffect(() => {
+    checkAuth();
+    // Re-check auth when location changes
+    // This helps with logout redirect
+  }, [location.pathname]);
 
   return (
     <div className="bg-white text-black min-h-screen">
       {isAuthenticated && <NavBar />}
       <Routes>
-        {isAuthenticated ? (
-          <>
-            <Route path="/" element={<QuestionPaperGenerator />} />
-            <Route path="/upload" element={<PdfUploader />} />
-            <Route path="/about" element={<div>About Page</div>} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/proctor" element={<Proctor />} />
-            <Route path="/test" element={<Test />} />
-            <Route path="*" element={<div>404 Not Found</div>} />
-            <Route path="/quiz" element={<Quiz />} />
-          </>
-        ) : (
-          <>
-            <Route path="/signin" element={<SignIn onLogin={handleLogin} />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/" element={<SignIn onLogin={handleLogin} />} />
-          </>
-        )}
+        <Route
+          path="/signin"
+          element={
+            isAuthenticated ? (
+              <Navigate to="/" />
+            ) : (
+              <SignIn onLogin={handleLogin} />
+            )
+          }
+        />
+        <Route
+          path="/signup"
+          element={isAuthenticated ? <Navigate to="/" /> : <SignUp />}
+        />
+
+        {/* Protected routes */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <QuestionPaperGenerator />
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            isAuthenticated ? <PdfUploader /> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            isAuthenticated ? <div>About Page</div> : <Navigate to="/signin" />
+          }
+        />
+        <Route
+          path="/profile"
+          element={isAuthenticated ? <Profile /> : <Navigate to="/signin" />}
+        />
+        <Route
+          path="/proctor"
+          element={isAuthenticated ? <Proctor /> : <Navigate to="/signin" />}
+        />
+        <Route
+          path="/test"
+          element={isAuthenticated ? <Test /> : <Navigate to="/signin" />}
+        />
+        <Route
+          path="/quiz"
+          element={isAuthenticated ? <Quiz /> : <Navigate to="/signin" />}
+        />
+        <Route
+          path="/history"
+          element={isAuthenticated ? <History /> : <Navigate to="/signin" />}
+        />
+
+        {/* Fallback route */}
+        <Route
+          path="*"
+          element={
+            isAuthenticated ? (
+              <div>404 Not Found</div>
+            ) : (
+              <Navigate to="/signin" />
+            )
+          }
+        />
       </Routes>
     </div>
   );
