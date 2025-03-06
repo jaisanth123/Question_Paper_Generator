@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Proctor = () => {
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleTakeTest = () => {
-    navigate("/test"); // Adjust the path as necessary
+  const checkMediaAccess = async () => {
+    try {
+      // Check for microphone access
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      // Check for camera access
+      await navigator.mediaDevices.getUserMedia({ video: true });
+      return true; // Both microphone and camera are accessible
+    } catch (error) {
+      setErrorMessage("Please allow access to your microphone and camera.");
+      return false; // Access denied
+    }
+  };
+
+  const handleTakeTest = async () => {
+    const hasAccess = await checkMediaAccess();
+    if (hasAccess) {
+      navigate("/test"); // Adjust the path as necessary
+    }
   };
 
   return (
@@ -21,6 +38,11 @@ const Proctor = () => {
         <p className="text-black mb-2">
           <strong>Maximum Marks:</strong> 100
         </p>
+        {errorMessage && (
+          <div className="bg-red-100 text-red-700 p-2 rounded mb-4">
+            {errorMessage}
+          </div>
+        )}
         <button
           onClick={handleTakeTest}
           className="mt-4 bg-black text-white text-xl p-3 rounded w-full hover:scale-110 duration-500 transition"
