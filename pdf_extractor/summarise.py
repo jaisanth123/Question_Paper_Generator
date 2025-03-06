@@ -2,6 +2,7 @@ import fitz  # PyMuPDF for extracting text from PDFs
 import re
 import google.generativeai as genai
 import os  # For file handling
+import sys  # Import the sys module
 
 # Configure Gemini API
 genai.configure(api_key="AIzaSyBN1ply0vEg4zTRMCTBM4DFRyjNmh2PrYU")
@@ -45,40 +46,87 @@ def extract_core_insights(text):
     """Extracts key insights from the text for question generation using Gemini 1.5 Flash."""
     model = genai.GenerativeModel("gemini-1.5-flash")
     prompt = (
-    "You are an expert in academic content analysis, tasked with extracting the most crucial insights for question paper generation. "
-    "Your response should be **structured, concise, and focused** on essential details..... "
-    "Strictly **avoid general overviews** and instead extract key academic elements, including:\n\n"
-    "**1. Key Concepts & Definitions:** Clearly define important terms and principles.\n"
-    "**2. Important Facts & Figures:** Highlight any numerical data, statistics, or critical points.\n"
-    "**3. Critical Explanations:** Extract detailed explanations of key topics.\n"
-    "**4. Important Dates, Events, or Formulas:** Identify historical dates, events, and significant formulas relevant to the subject.\n\n"
-    "### Content for Analysis:\n"
-    f"{text}\n\n"
-    "### Expected Output Format:\n"
-    "- **Concepts & Definitions:**\n"
-    "- **Facts & Figures:**\n"
-    "- **Explanations:**\n"
-    "- **Dates, Events & Formulas:**\n\n"
-    "Ensure the extracted content is **precise**, **well-structured**, and **ready to be used for academic assessments**."
-)
+        "You are an expert in academic content analysis, tasked with extracting the most crucial insights for question paper generation. "
+        "Your response should be **structured, concise, and focused** on essential details while ensuring no important information is missed.\n\n"
+        "**Extract and categorize the following elements:**\n"
+        "1️⃣ **Key Concepts & Definitions** → Clearly define important terms and principles.\n"
+        "2️⃣ **Important Facts & Figures** → Highlight any numerical data, statistics, or critical points.\n"
+        "3️⃣ **Critical Explanations** → Extract detailed explanations of key topics.\n"
+        "4️⃣ **Important Dates, Events, or Formulas** → Identify historical dates, events, and significant formulas relevant to the subject.\n\n"
+        "### **Content for Analysis:**\n"
+        f"{text}\n\n"
+        "### **Expected Output Format:**\n"
+        "**Concepts & Definitions:**\n"
+        "- [List of key concepts]\n\n"
+        "**Facts & Figures:**\n"
+        "- [List of important numbers, statistics, or facts]\n\n"
+        "**Explanations:**\n"
+        "- [Detailed explanations of key topics]\n\n"
+        "**Dates, Events & Formulas:**\n"
+        "- [Historical dates, events, and significant formulas]\n\n"
+        "Ensure that the extracted content is **precise**, **structured**, and **comprehensive** so that it can be used for generating **MCQs, 2-mark, 5-mark, and 10-mark questions**."
+    )
 
     response = model.generate_content(prompt)
     return response.text if response else "Failed to extract insights."
 
-def save_results_to_file(output_path, insights, categorized_codes):
+# def compress_text_for_qg(text):
+#     """Compresses extracted text while preserving essential details for MCQ and 2-mark question generation."""
+#     model = genai.GenerativeModel("gemini-1.5-flash")
+#     prompt = (
+#         "You are an expert in summarization, tasked with condensing an academic text **without losing critical details**. "
+#         "The output should be concise but preserve all key facts, concepts, and explanations so it remains useful for question generation.\n\n"
+#         "**Guidelines:**\n"
+#         "✅ Keep the summary under 512 tokens.\n"
+#         "✅ Maintain definitions, facts, and explanations while removing redundancy.\n"
+#         "✅ Ensure the summary covers all essential details for MCQ and 2-mark question generation.\n\n"
+#         "**Input Text:**\n"
+#         f"{text}\n\n"
+#         "**Expected Output:**\n"
+#         "A highly compressed version of the text that retains all necessary information for question generation."
+#     )
+
+#     response = model.generate_content(prompt)
+#     return response.text if response else "Compression failed."
+def compress_text_for_qg(text):
+    """Compresses extracted text while preserving essential details for MCQ and 2-mark question generation."""
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    prompt = (
+        "You are an expert in summarization, tasked with condensing an academic text without losing key details or critical information. "
+        "The output should be **concise but comprehensive**, keeping all necessary facts, concepts, and explanations intact.\n\n"
+        "**Guidelines:**\n"
+        "✅ Maintain the core concepts, definitions, and critical explanations.\n"
+        "✅ Avoid oversimplifying the text.\n"
+        "✅ Keep the summary **comprehensive** and **relevant** while reducing unnecessary details.\n\n"
+        "**Input Text:**\n"
+        f"{text}\n\n"
+        "**Expected Output:**\n"
+        "A condensed version of the text that maintains all essential information necessary for question generation."
+    )
+
+    response = model.generate_content(prompt)
+    return response.text.strip() if response else "Compression failed."
+
+def save_results_to_file(output, insights, categorized_codes):
     """Saves extracted insights and categorized code snippets to a text file."""
-    with open(output_path, "w", encoding="utf-8") as file:
-        file.write("=== Extracted Core Insights ===\n")
-        file.write(insights + "\n\n")
+    try:
+        # Encode special characters safely
+        safe_insights = insights.encode('utf-8', errors='replace').decode('utf-8')
+        
+        output.write("=== Extracted Core Insights ===\n")
+        output.write(safe_insights + "\n\n")
 
         if categorized_codes:
-            file.write("=== Detected Code Snippets ===\n")
+            output.write("=== Detected Code Snippets ===\n")
             for idx, item in enumerate(categorized_codes, 1):
-                file.write(f"Code {idx} ({item['category']}):\n{item['code']}\n\n")
+                safe_code = item['code'].encode('utf-8', errors='replace').decode('utf-8')
+                output.write(f"Code {idx} ({item['category']}):\n{safe_code}\n\n")
 
-    print(f"\nResults saved to: {output_path}")
+        print(f"\nResults saved to: {output.name}")
+    except UnicodeEncodeError as e:
+        print(f"Warning: Some special characters could not be encoded: {str(e)}")
 
-def main(pdf_path, output_txt_path):
+def main(pdf_path, insights_output, compressed_output):
     text = extract_text_from_pdf(pdf_path)
     if not text.strip():
         print("No text found in the PDF.")
@@ -90,11 +138,39 @@ def main(pdf_path, output_txt_path):
 
     # Extract core insights
     insights = extract_core_insights(text)
+    
+    # Compress text for question generation
+    compressed_text = compress_text_for_qg(text)
 
     # Save results to a text file
-    save_results_to_file(output_txt_path, insights, categorized_codes)
+    save_results_to_file(insights_output, insights, categorized_codes)
+    save_results_to_file(compressed_output, compressed_text, categorized_codes)
 
-# Example usage
-pdf_file = r"E:\Hacknovate\Question_Paper_Generator\pdf_extractor\dl.pdf"  # Use the correct file path
-output_file = r"E:\Hacknovate\Question_Paper_Generator\pdf_extractor\extracted_insights.txt"  # Output file path
-main(pdf_file, output_file)
+# Modify the script to accept command-line arguments
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage: python summarise.py <pdf_path> <insights_output> <compressed_output>")
+        sys.exit(1)
+
+    pdf_file = sys.argv[1]
+    insights_file = sys.argv[2]
+    compressed_file = sys.argv[3]
+    
+    # Modified file opening with explicit encoding and error handling
+    try:
+        insights_output = (open(insights_file, "w", encoding="utf-8", errors="replace") 
+                         if insights_file != "-" else sys.stdout)
+        compressed_output = (open(compressed_file, "w", encoding="utf-8", errors="replace") 
+                           if compressed_file != "-" else sys.stdout)
+        
+        main(pdf_file, insights_output, compressed_output)
+    except Exception as e:
+        print(f"Error processing file: {str(e)}")
+        sys.exit(1)
+    finally:
+        if insights_output != sys.stdout:
+            insights_output.close()
+        if compressed_output != sys.stdout:
+            compressed_output.close()
+
+
