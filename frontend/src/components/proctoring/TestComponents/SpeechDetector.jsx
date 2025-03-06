@@ -105,6 +105,8 @@ const SpeechDetector = ({ onAudioUpdate }) => {
     const dataArray = new Uint8Array(bufferLength);
 
     const checkAudioLevel = () => {
+      if (showPopup) return; // Skip monitoring if popup is active
+
       if (!analyserRef.current) return;
 
       analyserRef.current.getByteFrequencyData(dataArray);
@@ -122,7 +124,7 @@ const SpeechDetector = ({ onAudioUpdate }) => {
 
       // Threshold for noise detection (adjust as needed)
       const noiseThreshold = 15;
-
+      
       if (normalizedLevel > noiseThreshold) {
         // Sound detected
         soundDurationRef.current += 100;
@@ -150,6 +152,8 @@ const SpeechDetector = ({ onAudioUpdate }) => {
           }
         }
       }
+
+      requestAnimationFrame(checkAudioLevel);
     };
 
     // Check audio levels every 100ms
@@ -253,7 +257,6 @@ const SpeechDetector = ({ onAudioUpdate }) => {
         </div>
         <p className="text-center">Voice Level: {voiceLevel}</p>
       </div>
-      // Then replace your existing isNoiseDetected popup with this:
       {isNoiseDetected && (
         <div className="fixed inset-0 flex items-center justify-center  bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg shadow-xl w-80 max-w-md">
