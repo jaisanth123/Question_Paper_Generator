@@ -46,7 +46,7 @@ def extract_core_insights(text):
     model = genai.GenerativeModel("gemini-1.5-flash")
     prompt = (
     "You are an expert in academic content analysis, tasked with extracting the most crucial insights for question paper generation. "
-    "Your response should be **structured, concise, and focused** on essential details. "
+    "Your response should be **structured, concise, and focused** on essential details..... "
     "Strictly **avoid general overviews** and instead extract key academic elements, including:\n\n"
     "**1. Key Concepts & Definitions:** Clearly define important terms and principles.\n"
     "**2. Important Facts & Figures:** Highlight any numerical data, statistics, or critical points.\n"
