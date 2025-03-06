@@ -95,6 +95,6 @@ def main(pdf_path, output_txt_path):
     save_results_to_file(output_txt_path, insights, categorized_codes)
 
 # Example usage
-pdf_file = r"D:\hacknovate\Question_Paper_Generator\pdf_extractor\dl.pdf"  # Use the correct file path
-output_file = r"D:\hacknovate\Question_Paper_Generator\pdf_extractor\extracted_insights.txt"  # Output file path
+pdf_file = r"E:\Hacknovate\Question_Paper_Generator\pdf_extractor\dl.pdf"  # Use the correct file path
+output_file = r"E:\Hacknovate\Question_Paper_Generator\pdf_extractor\extracted_insights.txt"  # Output file path
 main(pdf_file, output_file)

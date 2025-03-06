@@ -1,5 +1,6 @@
 // AudioMonitor.jsx
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { FaVolumeUp, FaTimes } from "react-icons/fa"; // Importing icons
 import { Howl } from "howler"; // For audio handling (npm install howler)
 import { useNavigate } from "react-router-dom";
 import PopupNotification from "../../utils/PopupNotification";
@@ -252,15 +253,23 @@ const SpeechDetector = ({ onAudioUpdate }) => {
         </div>
         <p className="text-center">Voice Level: {voiceLevel}</p>
       </div>
+      // Then replace your existing isNoiseDetected popup with this:
       {isNoiseDetected && (
-        <div className="fixed inset-0 flex items-center justify-center">
-          <div className="bg-white p-4 w-100 rounded-lg shadow-lg">
-            <p className="text-center font-medium">Noise Detected!</p>
+        <div className="fixed inset-0 flex items-center justify-center  bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-80 max-w-md">
+            <div className="flex items-center justify-center mb-4">
+              <FaVolumeUp className="text-red-500 text-2xl mr-3" />
+              <p className="text-lg font-semibold">Noise Detected!</p>
+            </div>
+            <p className="text-center text-gray-600 mb-4">
+              Please maintain silence during the test.
+            </p>
             <button
               onClick={handleCloseNoiseWarning}
-              className="mt-4 bg-black text-white p-2 rounded w-full hover:scale-110 duration-500 transition"
+              className="flex items-center justify-center w-full bg-black text-white p-3 rounded-md hover:bg-gray-800 transition duration-300"
             >
-              Close
+              <FaTimes className="mr-2" />
+              <span>Acknowledge</span>
             </button>
           </div>
         </div>

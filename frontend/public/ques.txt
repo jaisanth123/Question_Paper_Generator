@@ -1,0 +1,153 @@
+Generating questions...
+
+Evaluating QA pairs...
+
+1) Q: How long after the tweets were first posted?
+   A: 1. the next 30 minutes 
+      2. a few minutes 
+      3. just minutes (correct)
+      4. 20:30 EDT 
+
+2) Q: How long did it take to remove the tweet?
+   A: 1. a few minutes (correct)
+      2. just minutes 
+      3. 20:30 EDT 
+      4. the next 30 minutes 
+
+3) Q: What was the password reset request?
+   A: 1. BBC 
+      2. Password (correct)
+      3. Reuters 
+      4. The US Senate Commerce 
+
+4) Q: What is the worst hack of a major social media platform yet?
+   A: 1. King's College London 
+      2. CrowdStrike (correct)
+      3. GMT
+      4. FBI 
+
+5) Q: How long will it take to double any Bitcoin payment sent to the address of his digital wallet?
+   A: 1. 20:30 EDT 
+      2. just minutes 
+      3. a few minutes 
+      4. the next 30 minutes (correct)
+
+6) Q: How much money did the link receive in the short time it was online?
+   A: 1. just minutes 
+      2. 1,000 
+      3. more than $100,000 (correct)
+      4. 2,000 
+
+7) Q: What is the role of social media companies in the 2020 election?
+   A: 1. Twitter (correct)
+      2. Alexi Drew 
+      3. Cameron Winklevoss 
+      4. Musk 
+
+8) Q: What was the message?
+   A: 1. Microsoft 
+      2. BBC 
+      3. the White House 
+      4. Instagram (correct)
+
+9) Q: When did users with verified accounts start to be able to send tweets again?
+   A: 1. Wednesday 
+      2. 2017 
+      3. November 
+      4. Thursday (correct)
+
+10) Q: When did Twitter start to send tweets again?
+    A: 1. just minutes 
+       2. 20:30 EDT (correct)
+       3. a few minutes 
+       4. the next 30 minutes 
+
+11) Q: What is the FBI's investigation into the hacking of Twitter accounts of high-profile US figures?
+    A: 1. Bitcoin (correct)
+       2. Cameron Winklevoss 
+       3. Twitter 
+       4. Kim Kardashian West 
+
+12) Q: How many contributions did the link receive in the short time it was online?
+    A: 1. hundreds (correct)
+       2. one 
+       3. millions 
+       4. One 
+
+13) Q: What is the worst hack of a major social media platform yet?
+    A: 1. FBI 
+       2. Reuters (correct)
+       3. the White House 
+       4. the Senate Commerce committee 
+
+14) Q: How many followers do the accounts targeted have?
+    A: 1. hundreds 
+       2. One 
+       3. one 
+       4. millions (correct)
+
+15) Q: "The account was not compromised," the White House said.?
+    A: 1. Bitcoin 
+       2. Bill Gates 
+       3. Jack Dorsey's 
+       4. Trump (correct)
+
+16) Q: what is the bbc's security source?
+    A: 1. the Senate Commerce committee 
+       2. Password 
+       3. GMT 
+       4. BBC (correct)
+
+17) Q: What is the message from the breach?
+    A: 1. Republican 
+       2. Democratic (correct)
+       3. Tesla 
+       4. Bitcoin 
+
+18) Q: What is the message about Cameron Winklevoss?
+    A: 1. Trump 
+       2. Kim Kardashian West 
+       3. Tyler (correct)
+       4. Jack Dorsey's 
+
+19) Q: "I'm feeling generous because of Covid-19," the tweet added.?
+    A: 1. Republican 
+       2. Democratic 
+       3. Tesla 
+       4. Bitcoin (correct)
+
+20) Q: What time did the tweets be deleted?
+    A: 1. first (correct)
+       2. Musk 
+       3. third 
+       4. one 
+
+21) Q: "Everyone is asking me to give back," said Mr Gates in a tweet.?
+    A: 1. Apple 
+       2. The US Senate Commerce 
+       3. Microsoft (correct)
+       4. GMT 
+
+22) Q: What is the role of social media companies in the 2020 election?
+    A: 1. GMT 
+       2. Apple 
+       3. National Cyber Security Centre 
+       4. BBC (correct)
+
+23) Q: Where did Mr Musk offer to double any Bitcoin payment sent to the address of his digital wallet?
+    A: 1. Bitcoin 
+       2. Republican 
+       3. Tesla (correct)
+       4. Democratic 
+
+24) Q: answer> The US Senate Commerce committee has demanded it brief it about Wednesday's?
+    A: 1. November 
+       2. 2020 
+       3. Wednesday 
+       4. 23 July (correct)
+
+25) Q: What happened to the Twitter accounts of high-profile US figures?
+    A: 1. FBI (correct)
+       2. National Cyber Security Centre 
+       3. the White House 
+       4. The US Senate Commerce
