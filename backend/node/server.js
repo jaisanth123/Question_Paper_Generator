@@ -31,8 +31,8 @@ app.post("/upload", upload.single("pdf"), async (req, res) => {
       return res.status(400).json({ error: "Invalid page numbers" });
     }
 
-    const start = parseInt(startPage);
-    const end = parseInt(endPage);
+    const start = parseInt(startPage) - 1;
+    const end = parseInt(endPage) - 1;
 
     console.log(`Splitting PDF from page ${start} to ${end}`);
 

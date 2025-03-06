@@ -1,29 +1,35 @@
-// @test.jsx
+// Test.jsx
 import React, { useState } from "react";
-import MultiplePersonDetector from "./TestComponents/MultiplePersonDetector";
-import CameraStatusMonitor from "./TestComponents/CameraStatusMonitor";
-import AudioMonitor from "./TestComponents/AudioMonitor";
-import ProctoringDashboard from "./TestComponents/ProctoringDashboard";
+import SpeechDetector from "./TestComponents/SpeechDetector";
 
 function Test() {
   const [proctoringStatus, setProctoringStatus] = useState({
-    multiplePeople: false,
     noiseDetected: false,
-    userOutOfFrame: false,
-    cameraCovered: false,
-    suspiciousActivity: false,
+    audioLevel: 0,
+    isMonitoring: false,
   });
 
+  const handleAudioUpdate = (newStatus) => {
+    setProctoringStatus((prev) => ({
+      ...prev,
+      ...newStatus,
+    }));
+  };
+
   return (
-    <div className="p-5">
-      <h1 className="text-2xl font-bold mb-5">Proctoring System</h1>
-      <div className="flex flex-col md:flex-row gap-5">
-        <div className="flex flex-col gap-5">
-          <MultiplePersonDetector setStatus={setProctoringStatus} />
-          <CameraStatusMonitor setStatus={setProctoringStatus} />
-          <AudioMonitor setStatus={setProctoringStatus} />
+    <div className="p-5 min-h-screen bg-gray-100">
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="text-2xl font-bold">Proctoring System</h1>
+        {/* Audio Level Bar at Top Right */}
+        <div className="w-48 bg-gray-200 rounded-full h-2.5">
+          <div
+            className="bg-blue-600 h-2.5 rounded-full transition-all duration-200"
+            style={{ width: `${Math.min(proctoringStatus.audioLevel, 100)}%` }}
+          ></div>
         </div>
-        <ProctoringDashboard status={proctoringStatus} />
+      </div>
+      <div className="flex flex-col gap-5">
+        <SpeechDetector onAudioUpdate={handleAudioUpdate} />
       </div>
     </div>
   );
