@@ -66,8 +66,10 @@ const SignIn = ({ onLogin }) => {
         </button>
         <p className="mt-4 text-center">
           New to the site?{" "}
-          <Link to="/signup" className="text-blue-500 hover:underline">
-            Sign up
+          <Link to="/signup" className="text-black hover:underline">
+            <b>
+              <u>Sign up</u>
+            </b>
           </Link>
         </p>
       </form>
