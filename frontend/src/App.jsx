@@ -7,6 +7,7 @@ import SignUp from "./components/auth/SignUp";
 import PdfUploader from "./components/pdf/PdfUploader";
 import Proctor from "./components/proctoring/Proctor";
 import Test from "./components/proctoring/test";
+import Profile from "./components/utils/Profile";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -37,7 +38,7 @@ function App() {
               <Route path="/" element={<QuestionPaperGenerator />} />
               <Route path="/upload" element={<PdfUploader />} />
               <Route path="/about" element={<div>About Page</div>} />
-              <Route path="/contact" element={<div>Contact Page</div>} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/proctor" element={<Proctor />} />
               <Route path="/test" element={<Test />} />
               <Route path="*" element={<div>404 Not Found</div>} />

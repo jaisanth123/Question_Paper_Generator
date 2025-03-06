@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link for navigation
-import { FaClipboardList, FaUserGraduate, FaHome, FaEye } from "react-icons/fa"; // Import icons
+import {
+  FaClipboardList,
+  FaUserGraduate,
+  FaHome,
+  FaRegUser,
+  FaUser, // Changed FaProfile to FaRegUser
+} from "react-icons/fa"; // Import icons
 
 const NavBar = () => {
   return (
@@ -26,17 +32,18 @@ const NavBar = () => {
           >
             <FaUserGraduate className="mr-1" /> Take Test
           </Link>
-          <Link
-            to="/contact"
-            className="text-white  hover:scale-110 hover:underline duration-500 transition"
-          >
-            <FaEye className="mr-1" /> Contact
-          </Link>
+
           <Link
             to="/upload"
             className="bg-black text-white hover:underline duration-500 hover:scale-110  transition"
           >
             <FaClipboardList className="mr-" /> Upload PDF
+          </Link>
+          <Link
+            to="/profile"
+            className="text-white  hover:scale-110 hover:underline duration-500 transition"
+          >
+            <FaUser className="mr-1" /> Profile
           </Link>
         </div>
       </div>
