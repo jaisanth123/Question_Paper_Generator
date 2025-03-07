@@ -59,7 +59,7 @@ const PdfUploader = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:3000/page-count",
+          "http://localhost:3000/api/pdf/page-count", // Ensure this matches the backend route
           formData
         );
         const { totalPages } = response.data;
@@ -89,7 +89,7 @@ const PdfUploader = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/upload",
+        "http://localhost:3000/api/pdf/upload",
         formData,
         {
           responseType: "blob", // Expect a file response
